@@ -12,6 +12,8 @@ const config = { headers: { X-Api-Key: API_KEY }}
 
 axios.get(url, config)
 
+![API_Example](./public/api_example.png "API Example")
+
 ## ERDs
 ![ERD](./public/workout_tracker_erd.drawio.png "ERD")
 
@@ -43,3 +45,4 @@ axios.get(url, config)
 - Workout templates
 - Ability to link exercises to certain workout templates so they can be read while filling out the template.
 - Some form of data analytics related to each template showing the weight used over time.
+- Implement Webauthn as an authentication method https://webauthn.guide/#about-webauthn
