@@ -7,14 +7,28 @@ const bcrypt = require('bcrypt')
 
 // mount our routes on the router
 
-// GET /users/new -- serves a form to create a new user
+// GET /profile -- show the user their profile page
+router.get('/', (req, res) => {
+  // if the user is not logged in -- they are not allowed to be here
+  if (!res.locals.user) {
+    res.redirect(
+      '/users/login?message=You must authenticate before you are authorized to view this resource!'
+    )
+  } else {
+    res.render('profile/profile.ejs', {
+      user: res.locals.user
+    })
+  }
+})
+
+// GET /profile/new -- serves a form to create a new user
 router.get('/new', (req, res) => {
-  res.render('users/new.ejs', {
+  res.render('profile/new.ejs', {
     user: res.locals.user
   })
 })
 
-// POST /users -- creates a new user from the form @ /users/new
+// POST /profile -- creates a new user from the form @ /profile/new
 router.post('/', async (req, res) => {
   try {
     // based on the info in the req.body, find or create user
@@ -26,7 +40,7 @@ router.post('/', async (req, res) => {
     // if the user is found, redirect user to login
     if (!created) {
       console.log('user exists!')
-      res.redirect('/users/login?message=Please log in to continue.')
+      res.redirect('/profile/login?message=Please log in to continue.')
     } else {
       // here we know its a new user
       // hash the supplied password
@@ -43,7 +57,7 @@ router.post('/', async (req, res) => {
       // place the encrypted id in a cookie
       res.cookie('userId', encryptedIdString)
       // redirect to user's profile
-      res.redirect('/users/profile')
+      res.redirect('/profile')
     }
   } catch (err) {
     console.log(err)
@@ -51,15 +65,15 @@ router.post('/', async (req, res) => {
   }
 })
 
-// GET /users/login -- render a login form that POSTs to /users/login
+// GET /profile/login -- render a login form that POSTs to /profile/login
 router.get('/login', (req, res) => {
-  res.render('users/login.ejs', {
+  res.render('profile/login.ejs', {
     message: req.query.message ? req.query.message : null,
     user: res.locals.user
   })
 })
 
-// POST /users/login -- ingest data from form rendered @ GET /users/login
+// POST /profile/login -- ingest data from form rendered @ GET /profile/login
 router.post('/login', async (req, res) => {
   try {
     // look up the user based on their email
@@ -69,16 +83,15 @@ router.post('/login', async (req, res) => {
       }
     })
     // boilerplate message if login fails
-    const badCredentialMessage = 'username or password incorrect'
+    const badCredentialMessage = 'Email or password incorrect'
     if (!user) {
       // if the user isn't found in the db
-      res.redirect('/users/login?message=' + badCredentialMessage)
+      res.redirect('/profile/login?message=' + badCredentialMessage)
     } else if (!bcrypt.compareSync(req.body.password, user.password)) {
       // if the user's supplied password is incorrect
-      res.redirect('/users/login?message=' + badCredentialMessage)
+      res.redirect('/profile/login?message=' + badCredentialMessage)
     } else {
       // if the user is found and their password matches log them in
-      console.log('logging user in!')
       // ecrypt the new user's id and convert it to a string
       const encryptedId = crypto.AES.encrypt(
         String(user.id),
@@ -87,7 +100,7 @@ router.post('/login', async (req, res) => {
       const encryptedIdString = encryptedId.toString()
       // place the encrypted id in a cookie
       res.cookie('userId', encryptedIdString)
-      res.redirect('/users/profile')
+      res.redirect('/profile')
     }
   } catch (err) {
     console.log(err)
@@ -95,26 +108,12 @@ router.post('/login', async (req, res) => {
   }
 })
 
-// GET /users/logout -- clear any cookies and redirect to the homepage
+// GET /profile/logout -- clear any cookies and redirect to the homepage
 router.get('/logout', (req, res) => {
   // log the user out by removing the cookie
   // make a get req to /
   res.clearCookie('userId')
   res.redirect('/')
-})
-
-// GET /users/profile -- show the user their profile page
-router.get('/profile', (req, res) => {
-  // if the user is not logged in -- they are not allowed to be here
-  if (!res.locals.user) {
-    res.redirect(
-      '/users/login?message=You must authenticate before you are authorized to view this resource!'
-    )
-  } else {
-    res.render('users/profile.ejs', {
-      user: res.locals.user
-    })
-  }
 })
 
 // export the router

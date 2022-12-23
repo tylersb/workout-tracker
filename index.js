@@ -45,26 +45,14 @@ app.use(async (req, res, next) => {
   }
 })
 
-// example custom middleware (incoming request logger)
-app.use((req, res, next) => {
-  // our code goes here
-  // console.log('hello from inside of the middleware!')
-  console.log(`incoming request: ${req.method} - ${req.url}`)
-  // res.locals are a place that we can put data to share with 'downstream routes'
-  // res.locals.myData = 'hello I am data'
-  // invoke next to tell express to go to the next route or middle
-  next()
-})
-
 // routes and controllers
 app.get('/', (req, res) => {
-  console.log(res.locals.user)
   res.render('home.ejs', {
     user: res.locals.user
   })
 })
 
-app.use('/users', require('./controllers/users'))
+app.use('/profile', require('./controllers/profile'))
 
 // listen on a port
 app.listen(PORT, () => {
