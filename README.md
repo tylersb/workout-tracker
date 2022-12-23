@@ -12,8 +12,6 @@ const config = { headers: { X-Api-Key: API_KEY }}
 
 axios.get(url, config)
 
-![API_Example](./public/api_example.png "API Example")
-
 ## ERDs
 ![ERD](./public/workout_tracker_erd.drawio.png "ERD")
 
