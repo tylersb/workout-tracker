@@ -1,0 +1,16 @@
+<%- include('../partials/header.ejs', { user }) %>
+
+<% data.forEach(exercise => { %>
+<div>
+  <div>Name: <%= exercise.name %></div>
+  <div>Type: <%= exercise.type %></div>
+  <div>Muscle: <%= exercise.muscle %></div>
+  <div>Equipment: <%= exercise.equipment %></div>
+  <div>Difficulty: <%= exercise.difficulty %></div>
+  <div>Instructions:</div>
+  <div><%= exercise.instructions %></div>
+</div>
+<hr>
+<% }) %>
+
+<%- include('../partials/footer.ejs') %>

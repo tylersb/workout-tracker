@@ -53,6 +53,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/profile', require('./controllers/profile'))
+app.use('/exercises', require('./controllers/exercises'))
 
 // listen on a port
 app.listen(PORT, () => {
