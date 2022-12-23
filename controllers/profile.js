@@ -8,16 +8,41 @@ const bcrypt = require('bcrypt')
 // mount our routes on the router
 
 // GET /profile -- show the user their profile page
-router.get('/', (req, res) => {
-  // if the user is not logged in -- they are not allowed to be here
-  if (!res.locals.user) {
-    res.redirect(
-      '/profile/login?message=You must authenticate before you are authorized to view this resource!'
-    )
-  } else {
-    res.render('profile/profile.ejs', {
-      user: res.locals.user
-    })
+router.get('/', async (req, res) => {
+  try {
+    // if the user is not logged in -- they are not allowed to be here
+    if (!res.locals.user) {
+      res.redirect(
+        '/profile/login?message=You must authenticate before you are authorized to view this resource!'
+      )
+    } else {
+      const workouts = await db.workout.findAll({
+        where: {
+          userId: res.locals.user.id
+        }
+      })
+      // res.json(workouts)
+      res.render('profile/profile.ejs', {
+        user: res.locals.user,
+        workouts
+      })
+    }
+  } catch (err) {
+    console.log(err)
+  }
+})
+
+router.post('/workouts', async (req, res) => {
+  try {
+    const date = new Date(req.body.date)
+    const month = date.getMonth()
+    const day = date.getDate() + 1
+    const year = date.getFullYear()
+    req.body.date = `${month}/${day}/${year}`
+    await db.workout.create(req.body)
+    res.redirect('/profile')
+  } catch (err) {
+    console.log(err)
   }
 })
 

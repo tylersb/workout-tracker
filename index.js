@@ -26,7 +26,7 @@ app.use(async (req, res, next) => {
         process.env.SECRET
       )
       const decryptedString = decryptedId.toString(crypto.enc.Utf8)
-      // the user is logged in, lets find them in the db
+      // find user in db
       const user = await db.user.findByPk(decryptedString)
       // mount the logged in user on the res.locals
       res.locals.user = user
@@ -47,7 +47,7 @@ app.use(async (req, res, next) => {
 
 // routes and controllers
 app.get('/', (req, res) => {
-  res.render('home.ejs', {
+  res.render('index.ejs', {
     user: res.locals.user
   })
 })
