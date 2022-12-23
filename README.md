@@ -44,3 +44,4 @@ axios.get(url, config)
 - Ability to link exercises to certain workout templates so they can be read while filling out the template.
 - Some form of data analytics related to each template showing the weight used over time.
 - Implement Webauthn as an authentication method https://webauthn.guide/#about-webauthn
+- Sanitize all database inputs
