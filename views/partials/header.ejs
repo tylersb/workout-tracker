@@ -13,7 +13,7 @@
             <li><a href='/'>Home</a></li>
             <% if (user) { %>
                 <!-- show these if user is logged -->
-                <li><a href="/profile">Profile</a></li>
+                <li><a href="/profile">Profile (<%= user.email %>)</a></li>
                 <li><a href="/profile/logout">Logout</a></li>
             <% } else { %>
                 <!-- show these if user not logged in -->

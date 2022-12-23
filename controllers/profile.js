@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
   // if the user is not logged in -- they are not allowed to be here
   if (!res.locals.user) {
     res.redirect(
-      '/users/login?message=You must authenticate before you are authorized to view this resource!'
+      '/profile/login?message=You must authenticate before you are authorized to view this resource!'
     )
   } else {
     res.render('profile/profile.ejs', {
