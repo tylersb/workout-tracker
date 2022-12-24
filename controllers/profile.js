@@ -16,15 +16,8 @@ router.get('/', async (req, res) => {
         '/profile/login?message=You must authenticate before you are authorized to view this resource!'
       )
     } else {
-      const workouts = await db.workout.findAll({
-        where: {
-          userId: res.locals.user.id
-        }
-      })
-      // res.json(workouts)
       res.render('profile/profile.ejs', {
-        user: res.locals.user,
-        workouts
+        user: res.locals.user
       })
     }
   } catch (err) {

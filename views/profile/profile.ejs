@@ -28,11 +28,11 @@
   
   <h3>My Workout History</h3>
   
-  <% if (workouts.length < 1) { %>
+  <% if (user.workouts.length < 1) { %>
     <h4>You haven't recorded any workouts yet!</h4>
     <% } %>
     
-    <% workouts.forEach((workout) => { %>
+    <% user.workouts.forEach((workout) => { %>
       <div>
         <a href="/profile/workouts/<%= workout.id %>">Date: <%= workout.date.toDateString() %> - Exercise: <%= workout.exercise %> - Weight: <%= workout.weight %> - Reps: <%= workout.reps %></a>
       </div>

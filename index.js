@@ -27,7 +27,9 @@ app.use(async (req, res, next) => {
       )
       const decryptedString = decryptedId.toString(crypto.enc.Utf8)
       // find user in db
-      const user = await db.user.findByPk(decryptedString)
+      const user = await db.user.findByPk(decryptedString, {
+        include: [db.workout, db.exercise]
+      })
       // mount the logged in user on the res.locals
       res.locals.user = user
     } else {
