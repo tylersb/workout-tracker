@@ -12,7 +12,6 @@ router.get('/', (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    req.body.userId = res.locals.user.id
     const [favorite] = await db.exercise.findOrCreate({
       where: {
         name: req.body.name,
@@ -23,6 +22,11 @@ router.post('/', async (req, res) => {
         instructions: req.body.instructions
       }
     })
+    const user = await db.user.findByPk(res.locals.user.id)
+    const hasLink = await user.hasExercise(favorite)
+    if (!hasLink) {
+      user.addExercise(favorite)
+    }
     res.redirect('/exercises')
   } catch (err) {
     console.log(err)
