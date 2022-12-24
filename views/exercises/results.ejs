@@ -1,10 +1,12 @@
 <%- include('../partials/header.ejs', { user }) %>
 
 <% data.forEach(exercise => { %>
-  <% let inFavorites = false %>
+  <% let formMethod = 'POST' %>
+  <% let buttonValue = 'Favorite' %>
   <% user.exercises.forEach(fav => { %>
   <% if (fav.name === exercise.name && fav.type === exercise.type && fav.muscle === exercise.muscle && fav.equipment === exercise.equipment && fav.difficulty === exercise.difficulty && fav.instructions === exercise.instructions) { %>
-  <% inFavorites = true %>
+  <% formMethod = 'DELETE' %>
+  <% buttonValue = 'Remove Favorite' %>
   <% }}) %>
 <div class="container-fluid">
   <div class="row">
@@ -17,22 +19,14 @@
   <div class="row">
     <div class="col-auto">Instructions:</div>
     <div class="col-auto ms-auto">
-      <% if (inFavorites) { %>
-      <form action="/exercises" method="DELETE">
-      <% } else { %>
-      <form action="/exercises" method="POST">
-      <% } %>
+      <form action="/exercises" method="<%= formMethod %>">
         <input hidden type="text" name="name" value="<%= exercise.name %>">
         <input hidden type="text" name="type" value="<%= exercise.type %>">
         <input hidden type="text" name="muscle" value="<%= exercise.muscle %>">
         <input hidden type="text" name="equipment" value="<%= exercise.equipment %>">
         <input hidden type="text" name="difficulty" value="<%= exercise.difficulty %>">
         <input hidden type="text" name="instructions" value="<%= exercise.instructions %>">
-        <% if (inFavorites) { %>
-          <input type="submit" value="Remove Favorite">
-        <% } else { %>
-          <input type="submit" value="Favorite">
-        <% } %>
+        <input type="submit" value="<%= buttonValue %>">
       </form>
     </div>
   </div>
