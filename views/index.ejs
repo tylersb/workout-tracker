@@ -1,5 +1,9 @@
 <%- include('partials/header.ejs', { user }) %> 
 
-<h2>Welcome Home, user</h2>
+<% if (user) { %>  
+<h2>Go to your profile page to track workouts</h2>
+<% } else { %>
+  <h2>Please log in or sign up to track workouts</h2>
+  <% } %>
 
 <%- include('partials/footer.ejs') %>
