@@ -3,6 +3,9 @@ const express = require('express')
 const db = require('../models')
 const router = express.Router()
 const axios = require('axios')
+const methodOverride = require('method-override')
+
+router.use(methodOverride('_method'))
 
 router.get('/', (req, res) => {
   res.render('exercises/index.ejs', {
@@ -27,6 +30,26 @@ router.post('/', async (req, res) => {
     if (!hasLink) {
       user.addExercise(favorite)
     }
+    res.redirect('/exercises')
+  } catch (err) {
+    console.log(err)
+  }
+})
+
+router.delete('/', async (req, res) => {
+  try {
+    const [favorite] = await db.exercise.findOrCreate({
+      where: {
+        name: req.body.name,
+        type: req.body.type,
+        muscle: req.body.muscle,
+        equipment: req.body.equipment,
+        difficulty: req.body.difficulty,
+        instructions: req.body.instructions
+      }
+    })
+    const user = await db.user.findByPk(res.locals.user.id)
+    user.removeExercise(favorite)
     res.redirect('/exercises')
   } catch (err) {
     console.log(err)

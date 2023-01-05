@@ -1,11 +1,11 @@
 <%- include('../partials/header.ejs', { user }) %>
 
 <% data.forEach(exercise => { %>
-  <% let formMethod = 'POST' %>
+  <% let formAction = '/exercises' %>
   <% let buttonValue = 'Favorite' %>
   <% user.exercises.forEach(fav => { %>
   <% if (fav.name === exercise.name && fav.type === exercise.type && fav.muscle === exercise.muscle && fav.equipment === exercise.equipment && fav.difficulty === exercise.difficulty && fav.instructions === exercise.instructions) { %>
-  <% formMethod = 'DELETE' %>
+  <% formAction = '/exercises?_method=DELETE' %>
   <% buttonValue = 'Remove Favorite' %>
   <% }}) %>
 <div class="container-fluid">
@@ -19,7 +19,7 @@
   <div class="row">
     <div class="col-auto">Instructions:</div>
     <div class="col-auto ms-auto">
-      <form action="/exercises" method="<%= formMethod %>">
+      <form action="<%= formAction %>" method="POST">
         <input hidden type="text" name="name" value="<%= exercise.name %>">
         <input hidden type="text" name="type" value="<%= exercise.type %>">
         <input hidden type="text" name="muscle" value="<%= exercise.muscle %>">
