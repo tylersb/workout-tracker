@@ -27,7 +27,7 @@ router.get('/', async (req, res) => {
 
 router.post('/workouts', async (req, res) => {
   try {
-    // req.body.userId = res.locals.user.id
+    req.body.userId = res.locals.user.id
     // const date = new Date(req.body.date)
     // const month = date.getMonth()
     // const day = date.getDate() + 1
