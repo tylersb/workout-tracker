@@ -27,12 +27,12 @@ router.get('/', async (req, res) => {
 
 router.post('/workouts', async (req, res) => {
   try {
-    req.body.userId = res.locals.user.id
-    const date = new Date(req.body.date)
-    const month = date.getMonth()
-    const day = date.getDate() + 1
-    const year = date.getFullYear()
-    req.body.date = `${month}/${day}/${year}`
+    // req.body.userId = res.locals.user.id
+    // const date = new Date(req.body.date)
+    // const month = date.getMonth()
+    // const day = date.getDate() + 1
+    // const year = date.getFullYear()
+    // req.body.date = `${month}/${day}/${year}`
     await db.workout.create(req.body)
     res.redirect('/profile')
   } catch (err) {
