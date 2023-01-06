@@ -13,20 +13,18 @@
     />
   </head>
   <body>
-    <nav>
-      <ul>
+    <nav class="nav nav-pills flex-column flex-sm-row">
         <!-- show home whether the user is logged in or not -->
-        <li><a href="/">Home</a></li>
+        <a class="flex-sm-fill text-sm-center nav-link" href="/">Home</a></li>
         <% if (user) { %>
         <!-- show these if user is logged -->
-        <li><a href="/profile">Profile (<%= user.email %>)</a></li>
-        <li><a href="/exercises">Search for Exercises</a></li>
-        <li><a href="/profile/logout">Logout</a></li>
+        <a class="flex-sm-fill text-sm-center nav-link" href="/profile">Profile (<%= user.email %>)</a></li>
+        <a class="flex-sm-fill text-sm-center nav-link" href="/exercises">Search for Exercises</a></li>
+        <a class="flex-sm-fill text-sm-center nav-link" href="/profile/logout">Logout</a></li>
         <% } else { %>
         <!-- show these if user not logged in -->
-        <li><a href="/profile/new">Sign Up</a></li>
-        <li><a href="/profile/login">Login</a></li>
+        <a class="flex-sm-fill text-sm-center nav-link" href="/profile/new">Sign Up</a></li>
+        <a class="flex-sm-fill text-sm-center nav-link" href="/profile/login">Login</a></li>
         <% } %>
-      </ul>
     </nav>
     <h1 class="text-center">Workout Tracker</h1>
