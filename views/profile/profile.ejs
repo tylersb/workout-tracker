@@ -2,7 +2,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col">
+    <div class="col-3">
       <form action="/profile/workouts" method="POST">
         <div class="row form-group">
           <label for="date" class="col-auto form-label">Date</label>
@@ -57,16 +57,16 @@
       <div class="container fluid">
         <% user.exercises.forEach((exercise, index) => { %>
         <div class="row">
-          <span class="col border border-primary"><%= exercise.name %></span>
+          <span class="col border border-primary rounded-start"><%= exercise.name %></span>
           <span class="col border border-primary"><%= exercise.muscle %></span>
-          <span class="col border border-primary"><%= exercise.equipment %></span>
+          <span class="col border border-primary rounded-end"><%= exercise.equipment %></span>
         </div>
         <div class="row">
           <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#exerciseInstructions<%= index %>" aria-expanded="false" aria-controls="ExerciseInstructions">
             Click for instructions
           </button>
           <div class="collapse" id="exerciseInstructions<%= index %>">
-            <div class="card card-body">
+            <div class="card card-body bg-dark text-white">
               <%= exercise.instructions %>
             </div>
           </div>
@@ -82,13 +82,14 @@
   <% if (user.workouts.length < 1) { %>
   <h4>You haven't recorded any workouts yet!</h4>
   <% } else { %>
-  <table class="table">
+  <table class="table text-white">
     <thead>
       <tr>
         <th scope="col">Date</th>
         <th scope="col">Exercise</th>
         <th scope="col">Weight</th>
         <th scope="col">Reps</th>
+        <th scope="col">Edit</th>
       </tr>
     </thead>
     <tbody>
@@ -98,6 +99,9 @@
         <td><%= workout.exercise %></td>
         <td><%= workout.weight %></td>
         <td><%= workout.reps %></td>
+        <td>
+          <a href="/profile/workouts/<%= workout.id %>" class="btn btn-primary">Edit</a>
+          </td>
       </tr>
       <% }) %>
     </tbody>

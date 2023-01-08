@@ -40,6 +40,17 @@ router.post('/workouts', async (req, res) => {
   }
 })
 
+router.get('/workouts/:id', async (req, res) => {
+  try {
+    res.render('profile/workouts.ejs', {
+      user: res.locals.user,
+      id: req.params.id
+    })
+  } catch (err) {
+    console.log(err)
+  }
+})
+
 // GET /profile/new -- serves a form to create a new user
 router.get('/new', (req, res) => {
   res.render('profile/new.ejs', {
