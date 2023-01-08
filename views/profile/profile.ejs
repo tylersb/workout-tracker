@@ -30,13 +30,27 @@
   
   <% if (user.workouts.length < 1) { %>
     <h4>You haven't recorded any workouts yet!</h4>
-    <% } %>
-    
-    <% user.workouts.forEach((workout) => { %>
-      <div>
-        <a href="/profile/workouts/<%= workout.id %>">Date: <%= workout.date.toDateString() %> - Exercise: <%= workout.exercise %> - Weight: <%= workout.weight %> - Reps: <%= workout.reps %></a>
-      </div>
-      <% }) %>
-      
+    <% } else { %>   
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Exercise</th>
+          <th scope="col">Weight</th>
+          <th scope="col">Reps</th>
+        </tr>
+      </thead>
+      <tbody>
+          <% user.workouts.forEach((workout) => { %>
+          <tr>
+            <td><%= workout.date.toDateString() %></td>
+            <td><%= workout.exercise %></td>
+            <td><%= workout.weight %></td>
+            <td><%= workout.reps %></td>
+          </tr>
+          <% }) %>
+          </tbody>
+      </table>
+      <% } %>
     </div>
 <%- include('../partials/footer') %>
