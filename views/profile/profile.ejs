@@ -1,56 +1,107 @@
 <%- include('../partials/header', { user }) %>
 
-<div class="container text-center">
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <form action="/profile/workouts" method="POST">
+        <div class="row form-group">
+          <label for="date" class="col-auto form-label">Date</label>
+          <input
+            type="date"
+            class="col-auto form-control"
+            id="date"
+            name="date"
+            required
+          />
+        </div>
 
-  <form action="/profile/workouts" method="POST">
-    <div class="row form-group">
-      <label for="date" class="col-auto form-label">Date</label>
-      <input type="date" class="col-auto form-control" id="date" name="date" required>
-    </div>
-    
-    <div class="row form-group">
-      <label for="exercise" class="col-auto form-label">Exercise Name</label>
-      <input type="text" class="col-auto form-control" id="exercise" name="exercise" required>
-    </div>
-    
-    <div class="row form-group">
-      <label for="weight" class="col-auto form-label">Weight</label>
-      <input type="number" class="col-auto form-control" id="weight" name="weight" required>
-    </div>
-    
-    <div class="row form-group">
-      <label for="reps" class="col-auto form-label">Reps</label>
-      <input type="number" class="col-auto form-control" id="reps" name="reps" required>
-    </div>
+        <div class="row form-group">
+          <label for="exercise" class="col-auto form-label"
+            >Exercise Name</label
+          >
+          <input
+            type="text"
+            class="col-auto form-control"
+            id="exercise"
+            name="exercise"
+            required
+          />
+        </div>
 
-    <input type="submit" class="btn btn-primary">
-  </form>
-  
+        <div class="row form-group">
+          <label for="weight" class="col-auto form-label">Weight</label>
+          <input
+            type="number"
+            class="col-auto form-control"
+            id="weight"
+            name="weight"
+            required
+          />
+        </div>
+
+        <div class="row form-group">
+          <label for="reps" class="col-auto form-label">Reps</label>
+          <input
+            type="number"
+            class="col-auto form-control"
+            id="reps"
+            name="reps"
+            required
+          />
+        </div>
+
+        <input type="submit" class="btn btn-primary" />
+      </form>
+    </div>
+    <div class="col overflow-auto" style="height: 400px">
+      <div class="container fluid">
+        <% user.exercises.forEach((exercise, index) => { %>
+        <div class="row">
+          <span class="col border border-primary"><%= exercise.name %></span>
+          <span class="col border border-primary"><%= exercise.muscle %></span>
+          <span class="col border border-primary"><%= exercise.equipment %></span>
+        </div>
+        <div class="row">
+          <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#exerciseInstructions<%= index %>" aria-expanded="false" aria-controls="ExerciseInstructions">
+            Click for instructions
+          </button>
+          <div class="collapse" id="exerciseInstructions<%= index %>">
+            <div class="card card-body">
+              <%= exercise.instructions %>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
   <h3>My Workout History</h3>
-  
+
   <% if (user.workouts.length < 1) { %>
-    <h4>You haven't recorded any workouts yet!</h4>
-    <% } else { %>   
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Date</th>
-          <th scope="col">Exercise</th>
-          <th scope="col">Weight</th>
-          <th scope="col">Reps</th>
-        </tr>
-      </thead>
-      <tbody>
-          <% user.workouts.forEach((workout) => { %>
-          <tr>
-            <td><%= workout.date.toDateString() %></td>
-            <td><%= workout.exercise %></td>
-            <td><%= workout.weight %></td>
-            <td><%= workout.reps %></td>
-          </tr>
-          <% }) %>
-          </tbody>
-      </table>
-      <% } %>
-    </div>
+  <h4>You haven't recorded any workouts yet!</h4>
+  <% } else { %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Exercise</th>
+        <th scope="col">Weight</th>
+        <th scope="col">Reps</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% user.workouts.forEach((workout) => { %>
+      <tr>
+        <td><%= workout.date.toDateString() %></td>
+        <td><%= workout.exercise %></td>
+        <td><%= workout.weight %></td>
+        <td><%= workout.reps %></td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <% } %>
+</div>
 <%- include('../partials/footer') %>
