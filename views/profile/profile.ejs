@@ -57,12 +57,23 @@
       <div class="container fluid">
         <% user.exercises.forEach((exercise, index) => { %>
         <div class="row">
-          <span class="col border border-primary rounded-start"><%= exercise.name %></span>
+          <span class="col border border-primary rounded-start"
+            ><%= exercise.name %></span
+          >
           <span class="col border border-primary"><%= exercise.muscle %></span>
-          <span class="col border border-primary rounded-end"><%= exercise.equipment %></span>
+          <span class="col border border-primary rounded-end"
+            ><%= exercise.equipment %></span
+          >
         </div>
         <div class="row">
-          <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#exerciseInstructions<%= index %>" aria-expanded="false" aria-controls="ExerciseInstructions">
+          <button
+            class="btn btn-primary"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#exerciseInstructions<%= index %>"
+            aria-expanded="false"
+            aria-controls="ExerciseInstructions"
+          >
             Click for instructions
           </button>
           <div class="collapse" id="exerciseInstructions<%= index %>">
@@ -100,8 +111,10 @@
         <td><%= workout.weight %></td>
         <td><%= workout.reps %></td>
         <td>
-          <a href="/profile/workouts/<%= index %>" class="btn btn-primary">Edit</a>
-          </td>
+          <a href="/profile/workouts/<%= index %>" class="btn btn-primary"
+            >Edit</a
+          >
+        </td>
       </tr>
       <% }) %>
     </tbody>
