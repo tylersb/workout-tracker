@@ -24,25 +24,22 @@ router.get('/', async (req, res) => {
       })
     }
   } catch (err) {
-    console.log(err)
+    res.status(500).send('server error')
   }
 })
 
+// POST /profile/workouts -- add new workouts
 router.post('/workouts', async (req, res) => {
   try {
     req.body.userId = res.locals.user.id
-    // const date = new Date(req.body.date)
-    // const month = date.getMonth()
-    // const day = date.getDate() + 1
-    // const year = date.getFullYear()
-    // req.body.date = `${month}/${day}/${year}`
     await db.workout.create(req.body)
     res.redirect('/profile')
   } catch (err) {
-    console.log(err)
+    res.status(500).send('server error')
   }
 })
 
+// GET /profile/workouts/:id -- show a single workout
 router.get('/workouts/:id', async (req, res) => {
   try {
     res.render('profile/workouts.ejs', {
@@ -50,10 +47,11 @@ router.get('/workouts/:id', async (req, res) => {
       id: req.params.id
     })
   } catch (err) {
-    console.log(err)
+    res.status(500).send('server error')
   }
 })
 
+// PUT /profile/workouts/:id -- update a single workout
 router.put('/workouts/:id', async (req, res) => {
   try {
     await db.workout.update(req.body, {
@@ -63,7 +61,7 @@ router.put('/workouts/:id', async (req, res) => {
     })
     res.redirect('/profile')
   } catch (err) {
-    console.log(err)
+    res.status(500).send('server error')
   }
 })
 
@@ -106,7 +104,6 @@ router.post('/', async (req, res) => {
       res.redirect('/profile')
     }
   } catch (err) {
-    console.log(err)
     res.status(500).send('server error')
   }
 })
@@ -149,7 +146,6 @@ router.post('/login', async (req, res) => {
       res.redirect('/profile')
     }
   } catch (err) {
-    console.log(err)
     res.status(500).send('server error')
   }
 })

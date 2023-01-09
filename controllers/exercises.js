@@ -7,12 +7,14 @@ const methodOverride = require('method-override')
 
 router.use(methodOverride('_method'))
 
+// GET /exercises -- show list of muscles to search for
 router.get('/', (req, res) => {
   res.render('exercises/index.ejs', {
     user: res.locals.user
   })
 })
 
+// POST /exercises -- add new exercises to favorites
 router.post('/', async (req, res) => {
   try {
     const [favorite] = await db.exercise.findOrCreate({
@@ -32,10 +34,11 @@ router.post('/', async (req, res) => {
     }
     res.redirect('/exercises')
   } catch (err) {
-    console.log(err)
+    res.status(500).send('server error')
   }
 })
 
+// DELETE /exercises -- remove exercises from favorites
 router.delete('/', async (req, res) => {
   try {
     const [favorite] = await db.exercise.findOrCreate({
@@ -52,29 +55,28 @@ router.delete('/', async (req, res) => {
     user.removeExercise(favorite)
     res.redirect('/exercises')
   } catch (err) {
-    console.log(err)
+    res.status(500).send('server error')
   }
 })
 
-router.get('/testing', (req, res) => {
-  res.render('exercises/testing.ejs', {
-    user: res.locals.user
-  })
-})
-
+// GET /exercises/:muscle -- show list of exercises for a given muscle
 router.get('/:muscle', async (req, res) => {
-  const url =
-    'https://api.api-ninjas.com/v1/exercises?muscle=' + req.params.muscle
-  const config = {
-    headers: {
-      'X-Api-Key': process.env.API_KEY
+  try {
+    const url =
+      'https://api.api-ninjas.com/v1/exercises?muscle=' + req.params.muscle
+    const config = {
+      headers: {
+        'X-Api-Key': process.env.API_KEY
+      }
     }
+    const getAPI = await axios.get(url, config)
+    res.render('exercises/results.ejs', {
+      user: res.locals.user,
+      data: getAPI.data
+    })
+  } catch (err) {
+    res.status(500).send('server error')
   }
-  const getAPI = await axios.get(url, config)
-  res.render('exercises/results.ejs', {
-    user: res.locals.user,
-    data: getAPI.data
-  })
 })
 
 // export the router
