@@ -60,6 +60,4 @@ app.use('/profile', require('./controllers/profile'))
 app.use('/exercises', require('./controllers/exercises'))
 
 // listen on a port
-app.listen(PORT, () => {
-  console.log(`authenticating users on PORT ${PORT} 🔐`)
-})
+app.listen(PORT)

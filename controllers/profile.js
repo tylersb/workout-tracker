@@ -14,7 +14,6 @@ router.use(methodOverride('_method'))
 router.get('/', async (req, res) => {
   try {
     // if the user is not logged in -- they are not allowed to be here
-    console.log(res.locals.user)
     if (!res.locals.user) {
       res.redirect(
         '/profile/login?message=You must authenticate before you are authorized to view this resource!'
