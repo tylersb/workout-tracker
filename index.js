@@ -28,7 +28,10 @@ app.use(async (req, res, next) => {
       const decryptedString = decryptedId.toString(crypto.enc.Utf8)
       // find user in db
       const user = await db.user.findByPk(decryptedString, {
-        include: [db.workout, db.exercise]
+        include: [db.workout, db.exercise],
+        order: [
+          [db.workout, 'date', 'ASC']
+        ]
       })
       // mount the logged in user on the res.locals
       res.locals.user = user
@@ -40,7 +43,6 @@ app.use(async (req, res, next) => {
     // move on the the next middleware/route
     next()
   } catch (err) {
-    console.log('error in auth middleware: 🔥🔥🔥🔥', err)
     // explicity set user to null if there is an error
     res.locals.user = null
     next() // go to the next thing

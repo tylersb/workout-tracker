@@ -14,6 +14,7 @@ router.use(methodOverride('_method'))
 router.get('/', async (req, res) => {
   try {
     // if the user is not logged in -- they are not allowed to be here
+    console.log(res.locals.user)
     if (!res.locals.user) {
       res.redirect(
         '/profile/login?message=You must authenticate before you are authorized to view this resource!'
@@ -83,7 +84,6 @@ router.post('/', async (req, res) => {
     })
     // if the user is found, redirect user to login
     if (!created) {
-      console.log('user exists!')
       res.redirect('/profile/login?message=Please log in to continue.')
     } else {
       // here we know its a new user
