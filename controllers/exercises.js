@@ -41,7 +41,7 @@ router.post('/', async (req, res) => {
 // DELETE /exercises -- remove exercises from favorites
 router.delete('/', async (req, res) => {
   try {
-    const [favorite] = await db.exercise.findOrCreate({
+    const favorite = await db.exercise.findOne({
       where: {
         name: req.body.name,
         type: req.body.type,

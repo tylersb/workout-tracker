@@ -15,8 +15,8 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 
 // custom auth middleware that checks the cookies for a user id
-// and it finds one, look up the user in the db
-// tell all downstream routes about this user
+// and if it finds one, look up the user in the db and
+// tells all downstream routes about this user
 app.use(async (req, res, next) => {
   try {
     if (req.cookies.userId) {
