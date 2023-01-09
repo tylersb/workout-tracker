@@ -32,7 +32,7 @@ router.post('/', async (req, res) => {
     if (!hasLink) {
       user.addExercise(favorite)
     }
-    res.redirect('/exercises')
+    res.redirect(req.get('Referrer'))
   } catch (err) {
     res.status(500).send('server error')
   }
@@ -53,7 +53,7 @@ router.delete('/', async (req, res) => {
     })
     const user = await db.user.findByPk(res.locals.user.id)
     user.removeExercise(favorite)
-    res.redirect('/exercises')
+    res.redirect(req.get('Referrer'))
   } catch (err) {
     res.status(500).send('server error')
   }
