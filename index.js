@@ -30,7 +30,7 @@ app.use(async (req, res, next) => {
       const user = await db.user.findByPk(decryptedString, {
         include: [db.workout, db.exercise],
         order: [
-          [db.workout, 'date', 'ASC']
+          [db.workout, 'date', 'DESC']
         ]
       })
       // mount the logged in user on the res.locals
