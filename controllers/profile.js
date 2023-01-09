@@ -4,6 +4,9 @@ const db = require('../models')
 const router = express.Router()
 const crypto = require('crypto-js')
 const bcrypt = require('bcrypt')
+const methodOverride = require('method-override')
+
+router.use(methodOverride('_method'))
 
 // mount our routes on the router
 
@@ -46,6 +49,19 @@ router.get('/workouts/:id', async (req, res) => {
       user: res.locals.user,
       id: req.params.id
     })
+  } catch (err) {
+    console.log(err)
+  }
+})
+
+router.put('/workouts/:id', async (req, res) => {
+  try {
+    await db.workout.update(req.body, {
+      where: {
+        id: req.params.id
+      }
+    })
+    res.redirect('/profile')
   } catch (err) {
     console.log(err)
   }

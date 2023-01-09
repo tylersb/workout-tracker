@@ -1,26 +1,67 @@
 <%- include('../partials/header', { user }) %>
 
-<table class="table text-white">
-  <thead>
-    <tr>
-      <th scope="col">Date</th>
-      <th scope="col">Exercise</th>
-      <th scope="col">Weight</th>
-      <th scope="col">Reps</th>
-      <th scope="col">Edit</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><%= user.workouts[id].date.toDateString() %></td>
-      <td><%= user.workouts[id].exercise %></td>
-      <td><%= user.workouts[id].weight %></td>
-      <td><%= user.workouts[id].reps %></td>
-      <td>
-        <form action="/profile/workouts/<%= id %>?_method=UPDATE" method="POST">
-          <input type="submit" class="btn btn-primary" value="Save" />
-    </tr>
-  </tbody>
-</table>
+<% let date = new Date(user.workouts[id].date) %>
+<% let month = date.getMonth() + 1 %>
+<% let day = date.getDate() %>
+<% let year = date.getFullYear() %>
+<% if (month < 10) { month = `0${month}` } %>
+<% if (day < 10) { day = `0${day}` } %>
+<% let formattedDate = `${year}-${month}-${day}` %>
+
+<div class="container">
+  <form action="/profile/workouts/<%= user.workouts[id].id %>?_method=PUT" method="POST">
+    <div class="row form-group">
+      <label for="date" class="col-auto form-label">Date</label>
+      <input
+        type="date"
+        class="col-auto form-control"
+        id="date"
+        name="date"
+        value="<%= formattedDate %>"
+        required
+      />
+    </div>
+  
+    <div class="row form-group">
+      <label for="exercise" class="col-auto form-label"
+        >Exercise Name</label
+      >
+      <input
+        type="text"
+        class="col-auto form-control"
+        id="exercise"
+        name="exercise"
+        value="<%= user.workouts[id].exercise %>"
+        required
+      />
+    </div>
+  
+    <div class="row form-group">
+      <label for="weight" class="col-auto form-label">Weight</label>
+      <input
+        type="number"
+        class="col-auto form-control"
+        id="weight"
+        name="weight"
+        value="<%= user.workouts[id].weight %>"
+        required
+      />
+    </div>
+  
+    <div class="row form-group">
+      <label for="reps" class="col-auto form-label">Reps</label>
+      <input
+        type="number"
+        class="col-auto form-control"
+        id="reps"
+        name="reps"
+        value="<%= user.workouts[id].reps %>"
+        required
+      />
+    </div>
+  
+    <input type="submit" class="btn btn-primary" />
+  </form>
+  </div>
 
 <%- include('../partials/footer') %>

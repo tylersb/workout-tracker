@@ -93,14 +93,14 @@
       </tr>
     </thead>
     <tbody>
-      <% user.workouts.forEach((workout) => { %>
+      <% user.workouts.forEach((workout, index) => { %>
       <tr>
         <td><%= workout.date.toDateString() %></td>
         <td><%= workout.exercise %></td>
         <td><%= workout.weight %></td>
         <td><%= workout.reps %></td>
         <td>
-          <a href="/profile/workouts/<%= workout.id %>" class="btn btn-primary">Edit</a>
+          <a href="/profile/workouts/<%= index %>" class="btn btn-primary">Edit</a>
           </td>
       </tr>
       <% }) %>
